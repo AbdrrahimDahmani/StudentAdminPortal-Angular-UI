@@ -19,36 +19,45 @@
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
 
-      <!-- Position Column -->
+      <!-- first name Column -->
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name </th>
         <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
       </ng-container>
 
-      <!-- Name Column -->
+      <!-- last name Column -->
       <ng-container matColumnDef="lastName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
         <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
       </ng-container>
-
+      <!-- date of birth Column -->
       <ng-container matColumnDef="dateOfBirth">
         <th mat-header-cell *matHeaderCellDef>Birth date</th>
         <td mat-cell *matCellDef="let element"> {{element.dateOfBirth | date:'dd/MM/yyyy'}} </td>
       </ng-container>
-
+      <!-- email Column -->
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef>Email</th>
         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
       </ng-container>
-
+      <!-- mobile Column -->
       <ng-container matColumnDef="mobile">
         <th mat-header-cell *matHeaderCellDef>Mobile</th>
         <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
       </ng-container>
-
+      <!-- gender Column -->
       <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef>Gender</th>
         <td mat-cell *matCellDef="let element"> {{element.gender.description}} </td>
+      </ng-container>
+       <!-- edit Column -->
+       <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+        <a [routerLink]="['/students',element.id]">
+          <mat-icon color="primary">edit</mat-icon>
+        </a>
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
