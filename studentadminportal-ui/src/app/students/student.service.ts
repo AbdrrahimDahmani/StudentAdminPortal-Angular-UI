@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 import { AddStudentRequest } from '../models/api-models/add-student-request.model';
 import { Student } from '../models/api-models/student.model';
 import {UpdateStudentRequest } from '../models/api-models/update-student-request.model';
@@ -47,4 +48,15 @@ export class StudentService {
     }
     return this.httpClient.post<Student>(this.baseApiUrl+'/students/add',addStudentRequest)
   }
+  uploadImage(studentId:string,file:File):Observable<string>{
+    const formData=new FormData();
+    formData.append("profileImage",file);
+    return this.httpClient.post(this.baseApiUrl+'/students/'+studentId+'/upload-image',formData,{
+      responseType:'text'
+    });
+
+  }
+  getImagePath(relativePath:string){
+        return `${this.baseApiUrl}/${relativePath}`;
+    }
 }
