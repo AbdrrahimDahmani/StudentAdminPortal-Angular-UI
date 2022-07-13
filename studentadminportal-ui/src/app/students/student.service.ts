@@ -17,7 +17,7 @@ export class StudentService {
   getStudent(studentId:string):Observable<Student>{
     return this.httpClient.get<Student>(this.baseApiUrl+'/students/'+studentId)
   }
-  updateStudent(studetnId:string,studentRequest:Student) : Observable<Student>{
+  updateStudent(studentId:string,studentRequest:Student) : Observable<Student>{
     const updateStudentRequest : UpdateStudentRequest = {
       firstName:studentRequest.firstName,
       lastName:studentRequest.lastName,
@@ -28,6 +28,9 @@ export class StudentService {
       physicalAddress:studentRequest.address.physicalAddress,
       postalAddress:studentRequest.address.postalAddress
     }
-    return  this.httpClient.put<Student>(this.baseApiUrl +'/students/'+studetnId,updateStudentRequest);
+    return  this.httpClient.put<Student>(this.baseApiUrl +'/students/'+studentId,updateStudentRequest);
+  }
+  deleteStudent(studentId:string) : Observable<Student>{
+      return this.httpClient.delete<Student>(this.baseApiUrl +'/students/'+studentId);
   }
 }
