@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Gender } from 'src/app/models/ui-models/gender.model';
@@ -37,7 +38,7 @@ export class ViewStudentComponent implements OnInit {
   isNewStudent=false;
   header='';
   displayProfileImageUrl='';
-
+  @ViewChild('studentDetailsForm') studentDetailForm?:NgForm;
 
   genderList:Gender[]=[];
   constructor(private readonly studentService:StudentService,
@@ -117,17 +118,20 @@ export class ViewStudentComponent implements OnInit {
     )
   }
   onAdd():void{
-      this.studentService.addStudent(this.student)
-      .subscribe(
-        (successResponse)=>{
-            this.snackBar.open("Student added successufly",undefined,{duration:2000});
-            setTimeout(()=>{
-              this.router.navigateByUrl(`students/${successResponse.id}`)},2000);
-        },
-        (errorResponse)=>{
-            this.snackBar.open("error",undefined,{duration:2000});
-        }
-      )
+      if(this.studentDetailForm?.form.valid){
+          this.studentService.addStudent(this.student)
+        .subscribe(
+          (successResponse)=>{
+              this.snackBar.open("Student added successufly",undefined,{duration:2000});
+              setTimeout(()=>{
+                this.router.navigateByUrl(`students/${successResponse.id}`)},2000);
+          },
+          (errorResponse)=>{
+              this.snackBar.open("error",undefined,{duration:2000});
+          }
+        );
+      }
+
 
   }
   uploadImage(event:any):void{
